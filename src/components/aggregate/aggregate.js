@@ -18,13 +18,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "10px",
     maxHeight: "53vh",
     overflowY: "scroll",
-    // padding: "3%",
-    // width: "100%",
     backgroundColor: theme.palette.background.paper,
   },
-  row: {
-    // width: "100%",
-  },
+  row: {},
   nestedStyle: {
     paddingLeft: theme.spacing(4),
   },
@@ -51,8 +47,13 @@ const Aggregate = ({ aggregate, header }) => {
           </ListSubheader>
         }
       >
-        {[...projectsMap.keys()].map((k) => (
-          <Li key={k} proj={projectsMap.get(k)} nested={true} className={row} />
+        {[...projectsMap.keys()].map((k, index) => (
+          <Li
+            key={index}
+            proj={projectsMap.get(k)}
+            nested={true}
+            className={row}
+          />
         ))}
       </List>
     </Paper>
@@ -78,15 +79,6 @@ const Li = ({ proj, nested }) => {
     );
   };
 
-  const getDate = (renderDate, grade) => {
-    return (
-      <ListItem key={renderDate} button className={nestedStyle}>
-        <ListItemText primary={renderDate} />
-        <ListItemIcon>{statusIcon(grade)}</ListItemIcon>
-      </ListItem>
-    );
-  };
-
   const listOfDate = (
     <>
       <ListItem button onClick={handleClick}>
@@ -94,9 +86,17 @@ const Li = ({ proj, nested }) => {
         {open ? <ExpandLess /> : <ExpandMore />}
         {statusIcon(grade)}
       </ListItem>
+      
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {dates.map((d) => getDate(d.date.split("T")[0], d.grade))}
+          {dates.map((d, index) => {
+            return (
+              <ListItem key={index} button className={nestedStyle}>
+                <ListItemText primary={d.date.split("T")[0]} />
+                <ListItemIcon>{statusIcon(d.grade)}</ListItemIcon>
+              </ListItem>
+            );
+          })}
         </List>
       </Collapse>
     </>

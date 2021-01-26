@@ -15,11 +15,10 @@ import {
 import ProgressBar from "../../progressbar";
 import { humanFileSize, getMaxXp } from "../../../services";
 import EnhancedTableHead from "./tablehead";
-// import EnhancedTableToolbar from "./toolbar";
 import { AddOrderNum, getComparator, stableSort } from "./tools";
 import DashboardServices from "../../../services/dashboard-service";
-// import Spinner from "../../spinner";
 import { ListSkeleton } from "../../skeleton";
+// import EnhancedTableToolbar from "./toolbar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,7 +76,9 @@ const EnhancedTable = ({ history }) => {
     history.push(`/profile/${login}`);
   };
 
-  /*   const handleChangePage = (event, newPage) => {
+  /*
+    // maybe will need in future
+    const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
@@ -91,7 +92,6 @@ const EnhancedTable = ({ history }) => {
     Math.min(rowsPerPage, renderStudents.length - page * rowsPerPage);
 
   if (loading) return <ListSkeleton />;
-  // if (loading) return <Spinner />;
 
   return (
     <div className={classes.root}>
@@ -124,7 +124,7 @@ const EnhancedTable = ({ history }) => {
                       hover
                       onClick={(event) => handleClick(event, row.login)}
                       tabIndex={-1}
-                      key={row.id}
+                      key={index}
                       className={classes.tb}
                     >
                       <TableCell padding="checkbox">{row.num}</TableCell>
