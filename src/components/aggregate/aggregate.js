@@ -19,9 +19,13 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "53vh",
     overflowY: "scroll",
     backgroundColor: theme.palette.background.paper,
+    cursor: "default",
   },
-  row: {},
+  row: {
+    cursor: "default",
+  },
   nestedStyle: {
+    cursor: "default",
     paddingLeft: theme.spacing(4),
   },
 }));
@@ -86,12 +90,12 @@ const Li = ({ proj, nested }) => {
         {open ? <ExpandLess /> : <ExpandMore />}
         {statusIcon(grade)}
       </ListItem>
-      
+
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {dates.map((d, index) => {
             return (
-              <ListItem key={index} button className={nestedStyle}>
+              <ListItem key={index} className={nestedStyle}>
                 <ListItemText primary={d.date.split("T")[0]} />
                 <ListItemIcon>{statusIcon(d.grade)}</ListItemIcon>
               </ListItem>

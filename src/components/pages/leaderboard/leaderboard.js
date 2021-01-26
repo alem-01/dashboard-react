@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 750,
     color: "white",
+    cursor: "default"
   },
   visuallyHidden: {
     border: 0,
