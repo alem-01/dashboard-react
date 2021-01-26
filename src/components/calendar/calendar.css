@@ -1,3 +1,51 @@
 .customCalendar {
   border: 0 solid white;
+  background-color: #1f1f1f;
+}
+
+.react-calendar__navigation button {
+  color: white;
+}
+
+.react-calendar__tile {
+  color: white;
+}
+
+.react-calendar__month-view__days__day--weekend,
+.react-calendar__tile.react-calendar__month-view__days__day.react-calendar__month-view__days__day--weekend.react-calendar__month-view__days__day--neighboringMonth {
+  color: red;
+}
+
+.react-calendar__tile.react-calendar__month-view__days__day.react-calendar__month-view__days__day--weekend:hover {
+  background-color: red;
+  color: black;
+}
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #616161;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: white;
+  color: black;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #e6e6e6;
+  color: black;
+}
+
+.react-calendar__tile.react-calendar__tile--now.react-calendar__tile--hasActive.react-calendar__year-view__months__month,
+.react-calendar__tile.react-calendar__tile--now.react-calendar__tile--hasActive.react-calendar__decade-view__years__year,
+.react-calendar__tile.react-calendar__tile--now.react-calendar__tile--hasActive.react-calendar__century-view__decades__decade {
+  background-color: white;
+  color: black;
+}
+
+.react-calendar__navigation__label:hover, 
+.react-calendar__navigation__label:focus,
+.react-calendar__navigation__label {
+  background-color: white;
+  color: black;
 }
