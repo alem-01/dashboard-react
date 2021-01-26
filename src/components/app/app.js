@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Container from "@material-ui/core/Container";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import "./app.css";
 import Header from "../header";
 import GetToken from "../get-token";
 import Auth from "../pages/auth";
