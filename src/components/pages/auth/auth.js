@@ -10,8 +10,8 @@ const prodUrl =
 const authUrl = process.env.NODE_ENV === "development" ? devUrl : prodUrl;
 
 const styles = {
-  cont: {
-    height: "90vh",
+  container: {
+    height: "75vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -19,9 +19,11 @@ const styles = {
 };
 
 const Auth = () => {
+  const { container } = styles;
+
   return (
-    <div style={styles.cont}>
-      <Button variant="outlined" color="primary" href={authUrl}>
+    <div style={container}>
+      <Button variant="contained" color="primary" href={authUrl}>
         Authorize
       </Button>
     </div>
