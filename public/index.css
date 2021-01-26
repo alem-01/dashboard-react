@@ -1,9 +1,9 @@
 * {
   margin: 0;
   padding: 0;
+  scrollbar-color: #454a4d #202324;
 }
 
-#root {
-  min-height: 100vh;
-  /* background-color: #292929; */
+body {
+  background-color:#000000;
 }
