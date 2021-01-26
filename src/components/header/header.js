@@ -9,8 +9,6 @@ import { Link as RouterLink } from "react-router-dom";
 const useStyles = makeStyles(() => ({
   header: {
     backgroundColor: "#1F1F1F",
-    // backgroundColor: "#000000",
-    // backgroundColor: "#3F51B5",
     paddingRight: "79px",
 
     // paddingLeft: "118px",
