@@ -11,7 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 
-import ProfileServices from "../../services/profile-services";
+import ProfileServices from "../services/profile-services";
 
 const useStyles = makeStyles((theme) => ({
   root: {

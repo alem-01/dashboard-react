@@ -8,7 +8,7 @@ import { ErrorIndicator } from "../../error";
 import Spinner from "../../spinner";
 import Aggregate from "../../aggregate";
 import StudentCard from "../../studentcard";
-import PiscineInfo from "../piscine";
+import PiscineInfo from "../piscine/piscine";
 import ProgressGraph from "../../progress-graph";
 import CalendarCont from "../../calendar";
 

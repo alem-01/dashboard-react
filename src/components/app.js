@@ -4,12 +4,12 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-import Header from "../header";
-import GetToken from "../get-token";
-import Auth from "../pages/auth";
-import Profile from "../pages/profile";
-import Leaderboard from "../pages/leaderboard/leaderboard";
-import { ErrorBoundry, ErrorIndicator } from "../error";
+import Header from "./header";
+import GetToken from "./get-token";
+import Auth from "./pages/auth/auth";
+import Profile from "./pages/profile/profile";
+import Leaderboard from "./pages/leaderboard/leaderboard";
+import { ErrorBoundry, ErrorIndicator } from "./error";
 
 export default class App extends Component {
   state = {
