@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  TableHead,
-  TableRow,
-  TableCell,
-  TableSortLabel,
-} from "@material-ui/core";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
 
 const headCells = [
   { id: "num", label: "#", numeric: false },
@@ -26,6 +24,7 @@ function EnhancedTableHead(props) {
       <TableRow>
         {headCells.map((headCell) => (
           <TableCell
+            id={`table${headCell.label === "#" ? "Num" : headCell.label}`}
             key={`${headCell.id}${headCell.label}`}
             align={headCell.numeric ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "default"}

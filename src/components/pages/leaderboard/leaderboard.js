@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
-import {
-  Table,
-  TableRow,
-  TableCell,
-  TableBody,
-  TableContainer,
-  Paper,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Table from "@material-ui/core/Table";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TableBody from "@material-ui/core/TableBody";
+import TableContainer from "@material-ui/core/TableContainer";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 import ProgressBar from "../../progressbar";
 import { humanFileSize, getMaxXp } from "../../../services";
@@ -21,17 +18,13 @@ import { ListSkeleton } from "../../skeleton";
 // import EnhancedTableToolbar from "./toolbar";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    minWidth: "70vh",
-  },
   paper: {
-    width: "100%",
+    paddingBottom: "3%",
+    paddingTop: "1%",
   },
   table: {
-    minWidth: 750,
     color: "white",
-    cursor: "default"
+    cursor: "default",
   },
   visuallyHidden: {
     border: 0,
@@ -56,8 +49,8 @@ const EnhancedTable = ({ history }) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [page] = useState(0);
-
   const [maxXp, setMaxXp] = useState(0);
+
   useEffect(() => {
     dashboardServices.getAllStudents().then((data) => {
       setRenderStudents(AddOrderNum(data));
@@ -73,20 +66,7 @@ const EnhancedTable = ({ history }) => {
     setOrderBy(property);
   };
 
-  const handleClick = (event, login) => {
-    history.push(`/profile/${login}`);
-  };
-
-  /*
-    // maybe will need in future
-    const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  }; */
+  const handleClick = (event, login) => history.push(`/profile/${login}`);
 
   const emptyRows =
     rowsPerPage -
@@ -95,75 +75,67 @@ const EnhancedTable = ({ history }) => {
   if (loading) return <ListSkeleton />;
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <Typography variant="h6" align="center" paragraph>
-          Students Leaderboard
-        </Typography>
-        {/* <EnhancedTableToolbar /> */}
+    <Paper className={classes.paper}>
+      <Typography variant="h6" align="center" paragraph>
+        Students Leaderboard
+      </Typography>
+      {/* <EnhancedTableToolbar /> // searchbar */}
 
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size="small"
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={renderStudents.length}
-            />
-            <TableBody>
-              {stableSort(renderStudents, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.login)}
-                      tabIndex={-1}
-                      key={index}
-                      className={classes.tb}
-                    >
-                      <TableCell padding="checkbox">{row.num}</TableCell>
+      <TableContainer>
+        <Table
+          className={classes.table}
+          aria-labelledby="tableTitle"
+          size="small"
+          aria-label="enhanced table"
+        >
+          <EnhancedTableHead
+            classes={classes}
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+            rowCount={renderStudents.length}
+          />
+          <TableBody>
+            {stableSort(renderStudents, getComparator(order, orderBy))
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => {
+                return (
+                  <TableRow
+                    hover
+                    onClick={(event) => handleClick(event, row.login)}
+                    tabIndex={-1}
+                    key={index}
+                  >
+                    <TableCell padding="checkbox" id="tableNum">
+                      {row.num}
+                    </TableCell>
 
-                      <TableCell component="th" id={row.login} scope="row">
-                        {row.login}
-                      </TableCell>
+                    <TableCell component="th" id={row.login} scope="row">
+                      {row.login}
+                    </TableCell>
 
-                      <TableCell align="right">
-                        <ProgressBar current={row.total_xp} MAX={maxXp} />
-                      </TableCell>
+                    <TableCell align="right" id="tableProgress">
+                      <ProgressBar current={row.total_xp} MAX={maxXp} />
+                    </TableCell>
 
-                      <TableCell align="right">
-                        {humanFileSize(row.total_xp)}
-                      </TableCell>
-                      <TableCell align="right">{row.generation}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 33 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        {/* <TablePagination
-          rowsPerPageOptions={[25, 50, 75]}
-          component="div"
-          count={renderStudents.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        /> */}
-      </Paper>
-    </div>
+                    <TableCell align="right">
+                      {humanFileSize(row.total_xp)}
+                    </TableCell>
+                    <TableCell align="right" id="tableGeneration">
+                      {row.generation}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 33 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 };
 
