@@ -31,51 +31,23 @@ export default class App extends Component {
       <ThemeProvider theme={this.theme}>
         <CssBaseline />
         <ErrorBoundry>
-          <Container
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: "5%",
-            }}
-          >
-            <Router>
-              <Header />
+          <Router>
+            <Header />
+            <Container style={{ marginTop: "5rem", marginBottom: "1rem" }}>
               <Switch>
                 <Route path="/" exact component={Auth} />
                 <Route path="/auth" exact component={GetToken} />
-
                 <Route path="/leaderboard" component={Leaderboard} />
+
                 <Route
                   path="/profile/:id"
-                  render={({ match }) => {
-                    const { id } = match.params;
-                    return <Profile login={id} />;
-                  }}
+                  render={({ match }) => <Profile login={match.params.id} />}
                 />
-
-                {/*
-        <Route
-        path="/profile/:id/piscine"
-        exact
-        render={({ match }) => {
-        // const { id } = match.params;
-        return (
-        <>
-        // want do universal profile header with basic info
-        <StudentInfo login={id} />
-        
-        // then render piscine info
-        <PiscineInfo />
-        </>
-        );
-        }}
-        /> */}
 
                 <Route render={() => <ErrorIndicator type="404" />} />
               </Switch>
-            </Router>
-          </Container>
+            </Container>
+          </Router>
         </ErrorBoundry>
       </ThemeProvider>
     );
