@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import PropTypes from "prop-types";
 
+import not_found from "../assets/img/not_found.png";
 import DashboardServices from "../services/dashboard-service";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,25 +24,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ImageAvatars(props) {
-  const dashboardServices = new DashboardServices();
-  const classes = useStyles();
+  const { getStudentAvatar } = new DashboardServices();
+  const { root, small, large } = useStyles();
   const { login, size, fullName } = props;
-  const [image, setImage] = useState(null);
-  const imgSrc = `data:image/png;base64, ${image}`;
-  const avatarSize = size === "large" ? classes.large : classes.small;
+  const [image, setImage] = useState(not_found);
+  const avatarSize = size === "large" ? large : small;
 
   useEffect(() => {
-    dashboardServices
-      .getStudentAvatar(login)
-      .then((data) => {
-        setImage(data.image);
-      })
-      .catch((e) => console.log("ava fetching err", e));
+    getStudentAvatar(login)
+      .then((data) => setImage(`data:image/png;base64, ${data.image}`))
+      .catch((e) => setImage(not_found));
   }, []);
 
   return (
-    <div className={classes.root}>
-      <Avatar alt={fullName} src={imgSrc} className={avatarSize} />
+    <div className={root}>
+      <Avatar alt={fullName} src={image} className={avatarSize} />
     </div>
   );
 }
