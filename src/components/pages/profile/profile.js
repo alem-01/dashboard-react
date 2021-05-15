@@ -7,10 +7,10 @@ import DashboardServices from "../../../services/dashboard-service";
 import { ErrorIndicator } from "../../error";
 import Spinner from "../../spinner";
 import Aggregate from "../../aggregate";
-import StudentCard from "../../studentcard";
 import PiscineInfo from "../piscine/piscine";
 import ProgressGraph from "../../progress-graph";
-import CalendarCont from "../../calendar/calendar";
+import StudentCard from "./studentcard";
+import CalendarCont from "./calendar/calendar";
 
 export default class Profile extends Component {
   dashboardService = new DashboardServices();
@@ -73,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "spase-around",
     minWidth: "90%",
+    minHeight: "90vh",
   },
   left: {
     padding: "1rem",
@@ -94,8 +95,8 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down("sm")]: {
     paper: { display: "block" },
-    left: { width: "100%" },
-    right: { width: "100%" },
+    left: { width: "100%", paddingBottom: "0" },
+    right: { width: "100%", paddingTop: "1rem" },
     calendar: {
       display: "none",
     },
