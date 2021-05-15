@@ -1,4 +1,4 @@
-@media screen and (max-width: 644px) {
+@media screen and (max-width: 684px) {
   #tableNum {
     display: none;
   }
@@ -10,13 +10,13 @@
   }
 }
 
-@media screen and (max-width: 554px) {
+@media screen and (max-width: 605px) {
   #tableGeneration {
     display: none;
   }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 444px) {
   #tableProgress,
   #headerIntra {
     display: none;

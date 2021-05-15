@@ -24,6 +24,9 @@ export default class App extends Component {
         paper: "#1F1F1F",
       },
     },
+    typography: {
+      fontFamily: ["pt-root-ui", "serif"].join(","),
+    },
   });
 
   render() {
