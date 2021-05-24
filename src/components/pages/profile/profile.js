@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core";
 
 import DashboardServices from "../../../services/dashboard-service";
 import { ErrorIndicator } from "../../error";
-import Spinner from "../../spinner";
+import Spinner from "../../spinner/spinner";
 import Aggregate from "../../aggregate";
 import PiscineInfo from "../piscine/piscine";
 import ProgressGraph from "../../progress-graph";

@@ -23,6 +23,7 @@ export default class App extends Component {
       background: {
         paper: "#1F1F1F",
       },
+      position: "relative"
     },
     typography: {
       fontFamily: ["Roboto", "serif"].join(","),
