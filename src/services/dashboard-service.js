@@ -4,11 +4,13 @@ export default class DashboardServices {
   getData = async (url = "", redirect = true) => {
     const response = await fetch(`${this._apiUrl}${url}`, {
       headers: {
+        // mode: "cors",
+        // method: "GET",
         Authorization: localStorage.getItem("token"),
       },
     });
 
-    if (!response.ok) {
+    if (!response.ok && redirect) {
       console.log("failed res: ", response);
       if (redirect) window.location.replace("/");
       throw new Error(
