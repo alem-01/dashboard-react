@@ -25,7 +25,8 @@ export default class App extends Component {
       },
     },
     typography: {
-      fontFamily: ["pt-root-ui", "serif"].join(","),
+      fontFamily: ["Roboto", "serif"].join(","),
+      // fontFamily: ["pt-root-ui", "serif"].join(","),
     },
   });
 
