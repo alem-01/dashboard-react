@@ -20,10 +20,10 @@ export default class App extends Component {
   theme = createMuiTheme({
     palette: {
       type: "dark",
+      position: "relative",
       background: {
         paper: "#1F1F1F",
       },
-      position: "relative"
     },
     typography: {
       fontFamily: ["Roboto", "serif"].join(","),

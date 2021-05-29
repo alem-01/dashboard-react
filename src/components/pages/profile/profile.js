@@ -16,14 +16,12 @@ export default class Profile extends Component {
   dashboardService = new DashboardServices();
 
   state = {
-    projects: {},
+    projects: null,
     loading: true,
     error: false,
   };
 
-  componentDidMount() {
-    this.updateProfile();
-  }
+  componentDidMount = () => this.updateProfile();
 
   onStudentLoaded(projects) {
     this.setState({
@@ -35,18 +33,23 @@ export default class Profile extends Component {
 
   onError = (err) => {
     this.setState({
+      progress: null,
       error: true,
       loading: false,
     });
   };
 
-  updateProfile() {
+  async updateProfile() {
     const { login } = this.props;
     this.dashboardService
       .getProgressInfo(login)
       .then((data) => {
-        this.onStudentLoaded(data);
-        this.setState({ loading: false });
+        const { basicInfo, aggregate } = data;
+        if (basicInfo && aggregate) this.onStudentLoaded(data);
+        else {
+          console.log("Error, progress data: ", data);
+          this.onError("user not found");
+        }
       })
       .catch(this.onError);
   }
@@ -54,7 +57,7 @@ export default class Profile extends Component {
   render() {
     const { projects, loading, error } = this.state;
     const hasData = !(loading || error);
-    const errorMessage = error ? <ErrorIndicator /> : null;
+    const errorMessage = error ? <ErrorIndicator /> : null; // can send error message to component
     const spinner = loading ? <Spinner /> : null;
     const content = hasData ? <StudentProfile projects={projects} /> : null;
 
