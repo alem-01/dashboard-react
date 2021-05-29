@@ -16,9 +16,9 @@ export default class Profile extends Component {
   dashboardService = new DashboardServices();
 
   state = {
-    projects: null,
+    projects: {},
     loading: true,
-    error: false,
+    error: null,
   };
 
   componentDidMount = () => this.updateProfile();
@@ -27,14 +27,14 @@ export default class Profile extends Component {
     this.setState({
       projects,
       loading: false,
-      error: false,
+      error: null,
     });
   }
 
   onError = (err) => {
     this.setState({
-      progress: null,
-      error: true,
+      progress: {},
+      error: err,
       loading: false,
     });
   };
@@ -46,10 +46,7 @@ export default class Profile extends Component {
       .then((data) => {
         const { basicInfo, aggregate } = data;
         if (basicInfo && aggregate) this.onStudentLoaded(data);
-        else {
-          console.log("Error, progress data: ", data);
-          this.onError("user not found");
-        }
+        else this.onError("404");
       })
       .catch(this.onError);
   }
@@ -57,7 +54,7 @@ export default class Profile extends Component {
   render() {
     const { projects, loading, error } = this.state;
     const hasData = !(loading || error);
-    const errorMessage = error ? <ErrorIndicator /> : null; // can send error message to component
+    const errorMessage = error ? <ErrorIndicator type={error} /> : null; // can send error message to component
     const spinner = loading ? <Spinner /> : null;
     const content = hasData ? <StudentProfile projects={projects} /> : null;
 
