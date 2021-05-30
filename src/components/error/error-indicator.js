@@ -1,9 +1,9 @@
 import React from "react";
 
 import NotFoundPage from "./404/404";
-import "./error-indicator.css";
+import ErrorPage from "./error-page/error-page";
 
-const CommonError = () => {
+/* const CommonError = () => {
   return (
     <div className="error-indicator">
       <span className="boom">BOOM!</span>
@@ -11,12 +11,9 @@ const CommonError = () => {
       <span>(but we already sent TIGers to fix it)</span>
     </div>
   );
-};
+}; */
 
 const ErrorIndicator = ({ type = "" }) =>
-  type === "404" ? <NotFoundPage /> : <CommonError />;
-
-// const NotFoundPage = <img src={_404} alt="404 not found" />;
-// const err = type === "404" ? <h1>PAGE WAS NOT FOUND</h1> : general;
+  type === "404" ? <NotFoundPage /> : <ErrorPage />;
 
 export default ErrorIndicator;
