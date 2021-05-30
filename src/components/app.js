@@ -9,7 +9,8 @@ import GetToken from "./get-token";
 import Auth from "./pages/auth/auth";
 import Profile from "./pages/profile/profile";
 import Leaderboard from "./pages/leaderboard/leaderboard";
-import { ErrorBoundry, ErrorIndicator } from "./error";
+import ErrorBoundry from "./error/error-boundry";
+import ErrorIndicator from "./error/error-indicator";
 
 export default class App extends Component {
   state = {

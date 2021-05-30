@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core";
 
 import DashboardServices from "../../../services/dashboard-service";
-import { ErrorIndicator } from "../../error";
+import ErrorIndicator from "../../error/error-indicator";
 import Spinner from "../../spinner/spinner";
 import Aggregate from "../../aggregate";
 import PiscineInfo from "../piscine/piscine";

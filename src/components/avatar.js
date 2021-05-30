@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import PropTypes from "prop-types";
 
-import not_found from "../assets/img/not_found.png";
+import not_found from "../assets/img/not_found_avatar.png";
 import DashboardServices from "../services/dashboard-service";
 
 const useStyles = makeStyles((theme) => ({
