@@ -193,7 +193,8 @@ html, body {
 }
 .box .box__ghost .box__ghost-shadow {
   height: 20px;
-  box-shadow: 0 50px 15px 5px #5a5964;
+  box-shadow: 0 50px 15px 5px #303030;
+  /* box-shadow: 0 50px 15px 5px #5a5964; */
   border-radius: 50%;
   margin: 0 auto;
   animation: smallnbig 3s ease-in-out infinite;

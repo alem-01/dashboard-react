@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import "./404.css";
 
 const NotFoundPage = () => {
-  //based on https://dribbble.com/shots/3913847-404-page
-
+  const [translator, setTranslator] = useState(null);
   let win = window,
     doc = document,
     docElem = doc.documentElement,
@@ -16,48 +15,18 @@ const NotFoundPage = () => {
     mouseX = 0,
     xAxis = 0,
     yAxis = 0;
-  // const ghostEyes = document.getElementsByClassName("box__ghost-eyes")
-  // const ghostEyes = document.getElementsByClassName("box__eye-left")
-  // const ghostEyes = document.getElementsByClassName("box__eye-right")
-  const elementByClass = (className) =>
-    document.getElementsByClassName(className);
-  const ghostEyes = [
-    elementByClass("box__eye-left"),
-    elementByClass("box__eye-right"),
-  ];
-  console.log("ghost eyes: ", ghostEyes);
-  // const body = document.getElementsByTagName("body");
-  body.addEventListener("mousemove", (e) => {
-    mouseX = e.offsetX;
-    mouseY = e.offsetY;
 
-    yAxis = ((pageY / 2 - mouseY) / pageY) * 300;
-    // console.log("mouse Y: ", mouseY);
-    //horizontalAxis
-    mouseX = e.pageX / -pageX;
-    xAxis = -mouseX * 100 - 100;
-
-    ghostEyes.forEach((el) =>
-    console.log("el:", el)
-      // el.style.transform(`translate(${xAxis}%,-${yAxis}%)`)
-    );
-  });
-
-  /* document.mousemove(function (event) {
-    //verticalAxis
-    mouseY = event.pageY;
-    yAxis = ((pageY / 2 - mouseY) / pageY) * 300;
-    console.log("mouse Y: ", mouseY);
-    //horizontalAxis
-    mouseX = event.pageX / -pageX;
-    xAxis = -mouseX * 100 - 100;
-
-    // $(".box__ghost-eyes").css({
-    //   transform: "translate(" + xAxis + "%,-" + yAxis + "%)",
-    // });
-
-    //console.log('X: ' + xAxis);
-  }); */
+  useEffect(
+    () =>
+      document.addEventListener("mousemove", (e) => {
+        mouseY = e.pageY
+        yAxis = ((pageY / 2 - mouseY) / pageY) * 300;
+        mouseX = e.pageX / -pageX;
+        xAxis = -mouseX * 100 - 100;
+        setTranslator(`translate(${xAxis}%,-${yAxis}%)`);
+      }),
+    []
+  );
 
   return (
     <div className="box">
@@ -70,7 +39,7 @@ const NotFoundPage = () => {
         <div className="symbol"></div>
 
         <div className="box__ghost-container">
-          <div className="box__ghost-eyes">
+          <div className="box__ghost-eyes" style={{ transform: translator }}>
             <div className="box__eye-left"></div>
             <div className="box__eye-right"></div>
           </div>
