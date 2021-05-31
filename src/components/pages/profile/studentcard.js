@@ -1,44 +1,39 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Avatar from "./avatar";
+import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
-  root: {
+import Avatar from "../../avatar";
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
     minWidth: 255,
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
   },
   title: {
     fontSize: 14,
   },
-  pos: {
+  phone: {
     marginBottom: 12,
   },
-});
+}));
 
 const StudentCard = ({ student, audits, renderSwitch }) => {
   const { login, first_name, last_name, tel } = student;
   const { up, down } = audits;
-  const { root, title, pos } = useStyles();
+  const { paper, title, phone } = useStyles();
 
   return (
-    <Paper variant="outlined" className={root}>
+    <Paper variant="outlined" className={paper}>
       <CardContent>
         <Avatar login={login} fullName={first_name + last_name} size="large" />
-
         <Typography className={title} color="textSecondary" gutterBottom>
           {login}
         </Typography>
-        <Typography variant="h5" component="h2">
+        <Typography variant="h6" component="h2">
           {first_name + " " + last_name}
         </Typography>
-        <Typography className={pos} color="textSecondary">
+        <Typography className={phone} color="textSecondary">
           {tel}
         </Typography>
         <Typography className={title} color="textSecondary" gutterBottom>

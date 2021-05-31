@@ -4,61 +4,60 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core";
 
 import DashboardServices from "../../../services/dashboard-service";
-import { ErrorIndicator } from "../../error";
-import Spinner from "../../spinner";
+import ErrorIndicator from "../../error/error-indicator";
+import Spinner from "../../spinner/spinner";
 import Aggregate from "../../aggregate";
-import StudentCard from "../../studentcard";
 import PiscineInfo from "../piscine/piscine";
 import ProgressGraph from "../../progress-graph";
-import CalendarCont from "../../calendar";
+import StudentCard from "./studentcard";
+import CalendarCont from "./calendar/calendar";
 
 export default class Profile extends Component {
   dashboardService = new DashboardServices();
 
   state = {
-    student: {},
+    projects: {},
     loading: true,
-    error: false,
+    error: null,
   };
 
-  componentDidMount() {
-    this.updateProfile();
-  }
+  componentDidMount = () => this.updateProfile();
 
-  onStudentLoaded(student) {
+  onStudentLoaded(projects) {
     this.setState({
-      student,
+      projects,
       loading: false,
-      error: false,
+      error: null,
     });
   }
 
   onError = (err) => {
     this.setState({
-      error: true,
+      progress: {},
+      error: err,
       loading: false,
     });
   };
 
-  updateProfile() {
+  async updateProfile() {
     const { login } = this.props;
     this.dashboardService
       .getProgressInfo(login)
       .then((data) => {
-        this.onStudentLoaded(data);
-        this.setState({ loading: false });
+        const { basicInfo, aggregate } = data;
+        if (basicInfo && aggregate) this.onStudentLoaded(data);
+        else this.onError("404");
       })
       .catch(this.onError);
   }
 
   render() {
-    const { student, loading, error } = this.state;
+    const { projects, loading, error } = this.state;
     const hasData = !(loading || error);
-    const errorMessage = error ? <ErrorIndicator /> : null;
+    const errorMessage = error ? <ErrorIndicator type={error} /> : null; // can send error message to component
     const spinner = loading ? <Spinner /> : null;
-    const content = hasData ? <StudentProfile student={student} /> : null;
+    const content = hasData ? <StudentProfile projects={projects} /> : null;
 
-    //  className="profile"
     return (
       <>
         {errorMessage}
@@ -69,27 +68,44 @@ export default class Profile extends Component {
   }
 }
 const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: "2%",
-    display: "grid",
-    gridTemplateColumns: "2fr 3.5fr",
+  paper: {
+    padding: "1rem auto",
+    display: "flex",
     justifyContent: "spase-around",
+    minWidth: "90%",
+    minHeight: "90vh",
   },
-  left: { paddingTop: "10px" },
-  right: { paddingTop: "10px" },
+  left: {
+    padding: "1rem",
+    minWidth: "40%",
+  },
+  right: {
+    padding: "1rem",
+    minWidth: "60%",
+  },
+
+  [theme.breakpoints.up("md")]: {
+    paper: {
+      maxWidth: "1200px",
+    },
+    left: {
+      minWidth: "350px",
+      maxWidth: "360px",
+    },
+  },
+  [theme.breakpoints.down("sm")]: {
+    paper: { display: "block" },
+    left: { width: "100%", paddingBottom: "0" },
+    right: { width: "100%", paddingTop: "1rem" },
+    calendar: {
+      display: "none",
+    },
+  },
 }));
 
-const StudentProfile = ({ student }) => {
-  const {
-    basicInfo,
-    aggregate,
-    progress,
-    audit_ratio,
-    // piscine_quests,
-    // piscine_exams,
-    // piscine_raids,
-  } = student;
-  const { root, left, right } = useStyles();
+const StudentProfile = ({ projects }) => {
+  const { basicInfo, aggregate, progress, audit_ratio } = projects;
+  const { paper, left, right, calendar } = useStyles();
   const [renderData, setRenderData] = useState("div01");
 
   const info =
@@ -100,14 +116,16 @@ const StudentProfile = ({ student }) => {
     );
 
   return (
-    <Paper className={root}>
+    <Paper className={paper}>
       <Container className={left}>
         <StudentCard
           student={basicInfo}
           audits={audit_ratio}
           renderSwitch={setRenderData}
         />
-        <CalendarCont />
+        <div className={calendar}>
+          <CalendarCont />
+        </div>
       </Container>
 
       <Container className={right}>

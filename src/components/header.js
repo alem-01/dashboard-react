@@ -6,87 +6,93 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as RouterLink } from "react-router-dom";
 
-const useStyles = makeStyles(() => ({
+import SideBar from "./sidebar";
+
+const useStyles = makeStyles((theme) => ({
   header: {
     backgroundColor: "#1F1F1F",
-    paddingRight: "79px",
-
-    // paddingLeft: "118px",
-    // paddingLeft: "10%",
-  },
-  logo: {
-    fontFamily: "Work Sans, sans-serif",
-    fontWeight: 600,
-    color: "#FFFEFE",
-    textAlign: "left",
   },
   menuButton: {
     fontFamily: "Open Sans, sans-serif",
     fontWeight: 700,
     size: "18px",
-    marginLeft: "38px",
+    marginLeft: "18px",
+    minWidth: "min-content",
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
   },
-  // toolbar: {
-  //   display: "flex",
-  //   justifyContent: "space-between",
-  // },
+  sideBar: {
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+  },
 }));
 
 const headersData = [
   {
     label: "Dashboard",
     href: "/leaderboard",
-    type: "in",
+    type: "inner",
   },
   {
     label: "Progress",
     href: "https://progress.alem.school/",
-    type: "out",
+    type: "outer",
   },
   {
     label: "Profile",
     href: "https://profile.alem.school/",
-    type: "out",
+    type: "outer",
   },
   {
     label: "Intra",
     href: "https://01.alem.school/",
-    type: "out",
+    type: "outer",
   },
   {
     label: "Gitea",
     href: "https://git.01.alem.school/",
-    type: "out",
+    type: "outer",
   },
 ];
 
 const Header = ({ onServiceChange }) => {
-  const { header, menuButton, toolbar } = useStyles();
+  const { header, menuButton, sideBar } = useStyles();
   const displayDesktop = () => {
-    return <Toolbar className={toolbar}>{getMenuButtons()}</Toolbar>;
+    return (
+      <Toolbar>
+        <div className={sideBar}>
+          <SideBar
+            className={sideBar}
+            links={headersData}
+            linkType={linkType}
+          />
+        </div>
+        {getMenuButtons()}
+      </Toolbar>
+    );
   };
 
   const linkType = (type, href) => {
-    return type === "in"
+    return type === "inner"
       ? { to: href, component: RouterLink }
       : { href: href, component: Link };
   };
 
   const getMenuButtons = () => {
-    return headersData.map(({ label, href, type }) => {
-      return (
-        <Button
-          {...{
-            key: label,
-            color: "inherit",
-            ...linkType(type, href),
-            className: menuButton,
-          }}
-        >
-          {label}
-        </Button>
-      );
-    });
+    return headersData.map(({ label, href, type }) => (
+      <Button
+        className={menuButton}
+        {...{
+          key: label,
+          color: "inherit",
+          ...linkType(type, href),
+        }}
+      >
+        {label}
+      </Button>
+    ));
   };
 
   return (

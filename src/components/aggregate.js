@@ -1,22 +1,17 @@
 import React, { useState } from "react";
-import Collapse from "@material-ui/core/Collapse";
 import List from "@material-ui/core/List";
 import Paper from "@material-ui/core/Paper";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 
+import CustomListItem from "./list-item";
 import ProfileServices from "../services/profile-services";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  paper: {
     marginTop: "10px",
-    maxHeight: "53vh",
+    minHeight: "",
     overflowY: "scroll",
     backgroundColor: theme.palette.background.paper,
     cursor: "default",
@@ -24,96 +19,53 @@ const useStyles = makeStyles((theme) => ({
   row: {
     cursor: "default",
   },
+  msg: {
+    color: "#FB0000",
+    fontSize: "18px",
+    fontWeight: "600",
+    margin: "1% 0",
+  },
   nestedStyle: {
     cursor: "default",
-    paddingLeft: theme.spacing(4),
   },
 }));
 
 const Aggregate = ({ aggregate, header }) => {
-  const { projects } = aggregate;
-  const profileServices = new ProfileServices();
-  const [projectsMap] = useState(
-    profileServices.sortAggregateProject(projects)
-  );
-  const { root, row } = useStyles();
+  const { paper, row, msg, nestedStyle } = useStyles();
+  const { sortAggregateProject } = new ProfileServices();
+  const [projectsMap] = useState(sortAggregateProject(aggregate.projects));
 
   return (
-    <Paper elevation={2} className={root} variant="outlined">
-      <List
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-        subheader={
-          //need to mode to p or span to do align
-          <ListSubheader component="div" id="nested-list-subheader">
-            {/*maybe not need render total_xp in case of piscine */}
-            {/*Div 01 total XP incorrect  {humanFileSize(total_xp)} */}
-          </ListSubheader>
-        }
-      >
-        {[...projectsMap.keys()].map((k, index) => (
-          <Li
-            key={index}
-            proj={projectsMap.get(k)}
-            nested={true}
-            className={row}
-          />
-        ))}
-      </List>
+    <Paper elevation={2} className={paper} variant="outlined">
+      {projectsMap.size ? (
+        <List
+          component="nav"
+          aria-labelledby="nested-list-subheader"
+          subheader={
+            //need to mode to p or span to do align
+            <ListSubheader component="div" id="nested-list-subheader">
+              {/*maybe not need render total_xp in case of piscine */}
+              {/*Div 01 total XP incorrect  {humanFileSize(total_xp)} */}
+            </ListSubheader>
+          }
+        >
+          {[...projectsMap.keys()].map((k, index) => (
+            <CustomListItem
+              key={index}
+              value={projectsMap.get(k)}
+              isNested={true}
+              className={row}
+              nestedStyle={nestedStyle}
+            />
+          ))}
+        </List>
+      ) : (
+        <Typography className={msg} align="center">
+          Not projects has been completed yet
+        </Typography>
+      )}
     </Paper>
   );
-};
-
-// need to move to separate component
-const Li = ({ proj, nested }) => {
-  const { name, dates, grade } = proj;
-  const [open, setOpen] = useState(false);
-  const isSingle = dates.length === 1;
-  const { nestedStyle } = useStyles();
-
-  const handleClick = () => setOpen(!open);
-
-  const project = name.toUpperCase();
-
-  const statusIcon = (grade) => {
-    return Boolean(grade) ? (
-      <CheckCircleOutlineIcon style={{ color: "green" }} />
-    ) : (
-      <CancelOutlinedIcon style={{ color: "red" }} />
-    );
-  };
-
-  const listOfDate = (
-    <>
-      <ListItem button onClick={handleClick}>
-        <ListItemText primary={project} />
-        {open ? <ExpandLess /> : <ExpandMore />}
-        {statusIcon(grade)}
-      </ListItem>
-
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {dates.map((d, index) => {
-            return (
-              <ListItem key={index} className={nestedStyle}>
-                <ListItemText primary={d.date.split("T")[0]} />
-                <ListItemIcon>{statusIcon(d.grade)}</ListItemIcon>
-              </ListItem>
-            );
-          })}
-        </List>
-      </Collapse>
-    </>
-  );
-
-  const singleDate = (
-    <ListItem>
-      <ListItemText primary={project} color="primary" />
-      {statusIcon(grade)}
-    </ListItem>
-  );
-
-  return !isSingle && nested ? listOfDate : singleDate;
 };
 
 export default Aggregate;

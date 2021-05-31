@@ -1,0 +1,31 @@
+@media screen and (max-width: 684px) {
+  #tableNum {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 545px) {
+  #headerGitea {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 605px) {
+  #tableGeneration {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 444px) {
+  #tableProgress,
+  #headerIntra {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 384px) {
+  #headerProfile,
+  #headerProgress {
+    display: none;
+  }
+}

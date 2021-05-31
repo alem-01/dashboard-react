@@ -1,31 +1,19 @@
 import React from "react";
 
-import "./error-indicator.css";
-import icon from "./error.png";
-import _404 from "./404.png";
+import NotFoundPage from "./404/404";
+import ErrorPage from "./error-page/error-page";
 
-// const styles = {
-//   container: {
-//     display: "flex",
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-// };
-
-const ErrorIndicator = ({ type = "" }) => {
-  const general = (
+/* const CommonError = () => {
+  return (
     <div className="error-indicator">
-      <img src={icon} alt="error icon" />
       <span className="boom">BOOM!</span>
       <span>something has gone terribly wrong</span>
       <span>(but we already sent TIGers to fix it)</span>
     </div>
   );
+}; */
 
-  const notFound = <img src={_404} alt="404 not found" />;
-  const err = type === "404" ? notFound : general;
-
-  return err;
-};
+const ErrorIndicator = ({ type = "" }) =>
+  type === "404" ? <NotFoundPage /> : <ErrorPage />;
 
 export default ErrorIndicator;

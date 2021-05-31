@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
-import Typography from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 
 // import {rows} from "./leaderboard";
 // const handleChange = (input = "") => {};
